@@ -46,9 +46,8 @@ public class Server {
             e.printStackTrace();
         }
     }
-    public static void main(String[] args) {
-        int port=1234;
-        ServerSocket serverSocket = new ServerSocket(port);
+    public static void main(String[] args) throws IOException {
+        ServerSocket serverSocket = new ServerSocket(1234);
         Server server = new Server(serverSocket);
         server.startServer();
     }
