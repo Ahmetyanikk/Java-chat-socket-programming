@@ -5,9 +5,12 @@
  */
 package Server;
 
+import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.io.BufferedReader;
 
 /**
  *
@@ -15,16 +18,23 @@ import java.net.Socket;
  */
 public class Server {
     private  ServerSocket serverSocket;
+    public static ArrayList<String>usernames = new ArrayList<>();
+    private BufferedReader bufferedReader;
+    
+
     
     public Server(ServerSocket serverSocket){
         this.serverSocket= serverSocket;
     }
     
     public void startServer(){
+        
+
         try{
             while(!serverSocket.isClosed()){
-                
                Socket socket = serverSocket.accept();
+             String  msgFromGroupChat = bufferedReader.readLine();
+             usernames.set(usernames.size(),msgFromGroupChat);
                 System.out.println("Yeni birisi katıldı muhabbete");//burası ingilizce olucak
                 ClientHandler clientHandler = new ClientHandler(socket);
                 

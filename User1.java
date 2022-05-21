@@ -7,6 +7,7 @@ package Server;
 import Server.Client;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -24,6 +25,7 @@ public class User1 extends javax.swing.JFrame {
     private BufferedReader bufferedReader;
     private BufferedWriter bufferedWriter;
     private String username;
+    private boolean access;
     /**;
      * Creates new form User1
      */
@@ -54,14 +56,14 @@ public class User1 extends javax.swing.JFrame {
 
         port_Textfield.setText("1234");
 
-        jButton1.setText("jButton1");
+        jButton1.setText("bağlan");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        jLabel1.setText("jLabel1");
+        jLabel1.setText("Durum");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -78,7 +80,7 @@ public class User1 extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(jButton1))
-                .addContainerGap(173, Short.MAX_VALUE))
+                .addContainerGap(181, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -89,9 +91,9 @@ public class User1 extends javax.swing.JFrame {
                 .addComponent(port_Textfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
-                .addGap(48, 48, 48)
+                .addGap(40, 40, 40)
                 .addComponent(jLabel1)
-                .addContainerGap(82, Short.MAX_VALUE))
+                .addContainerGap(90, Short.MAX_VALUE))
         );
 
         pack();
@@ -100,16 +102,22 @@ public class User1 extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
             String username=Textfield_Username.getText();
             int port = Integer.parseInt(port_Textfield.getText());
+         
           Socket socket = null;
         try {
             socket = new Socket("localhost", port);
+             String messageToSend=username;
+               bufferedWriter.write(messageToSend);
+                bufferedWriter.newLine();
+                bufferedWriter.flush();
+
         } catch (IOException ex) {
             Logger.getLogger(User1.class.getName()).log(Level.SEVERE, null, ex);
         }
             Client client = new Client(socket,username);
            ChatFrame ch= new ChatFrame(username,socket);
            ch.setVisible(true);
-           
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

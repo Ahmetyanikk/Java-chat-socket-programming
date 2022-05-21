@@ -99,8 +99,10 @@ public class Client {
           String username  =scanner.nextLine();
           Socket socket = new Socket("localhost", 1234);
           Client client = new Client(socket,username);
+          System.out.println(ClientHandler.clientHandlers.size());
           client.listenForMessage();
           client.sendMessage();
+          
           
     }
 }

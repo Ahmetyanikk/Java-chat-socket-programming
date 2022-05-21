@@ -37,33 +37,19 @@ public class ChatFrame extends javax.swing.JFrame {
          }catch(IOException e){
              closeEverything(socket,bufferedReader,bufferedWriter);
          }
-    }
-     public void sendMessage(){
-        try{
-            bufferedWriter.write(username);
-            bufferedWriter.newLine();
-            bufferedWriter.flush();
-            
-            Scanner scanner = new Scanner(System.in);
-            while(socket.isConnected()){
-                String messageToSend = Message_TxtField.getText();
-                jTextArea1.append(username+": "+messageToSend+"\n");
-                System.out.println("yollandı");
-                bufferedWriter.write(username+": "+messageToSend);
-                bufferedWriter.newLine();
-                bufferedWriter.flush();
-            }
-        }catch(IOException e){
-            closeEverything(socket,bufferedReader,bufferedWriter);
-        }
-    }
-     public  void listenForMessage(){
+        listenForMessage();
+         
+                   
+               
+    }   
+     public  void listenForMessage(){ 
         new Thread(new Runnable() {
             @Override
             public void run() {
                String msgFromGroupChat;
                while(socket.isConnected()){
                    try{
+                       
                        msgFromGroupChat = bufferedReader.readLine();
                        jTextArea1.append(msgFromGroupChat+"\n");
                    }catch(IOException e){
@@ -197,17 +183,15 @@ public class ChatFrame extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) throws IOException {
+    public  void main(String args[]) throws IOException {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-      Socket socket = new Socket("localhost", 1234);
-          Client client = new Client(socket,username);
-          client.listenForMessage();
-          client.sendMessage();
-          System.out.println("asd");
+
+       
+          
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -225,13 +209,13 @@ public class ChatFrame extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(ChatFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
+          
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new ChatFrame().setVisible(true);
-              
+               listenForMessage();
             }
         });
     }
